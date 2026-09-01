@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Central Pet - Recuperar Senha</title>
+
+  <!-- Script Oficial de Execução do Tailwind CSS v3 via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Links de fontes externas do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Configurações das famílias de fontes injetadas no motor do Tailwind v3 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            serif: ['"Abhaya Libre"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans text-black bg-[#FFEFE5]">
+
+  <!-- Cabeçalho (Barra Laranja Superior) -->
+  <header class="w-full h-[70px] bg-[#FFA56D] flex items-center px-5 sm:px-[30px] shrink-0">
+    <div class="flex items-center">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <!-- Dimensões explícitas para blindar a logo contra atrasos de renderização -->
+        <img src="../img/logo-centralpet.png" alt="Logo Central Pet" width="40" height="40"
+          class="w-10 h-10 object-contain max-w-[40px] max-h-[40px]">
+        <span class="font-serif text-3xl sm:text-[32px] font-extrabold text-black">
+          Central <span class="text-[#E00808]">Pet</span>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Área Principal (Fundo de Patinhas) -->
+  <main
+    class="flex-1 w-full flex flex-col items-center justify-center px-5 py-10 bg-[#FFEFE5] bg-[url('../img/fundo-patinhas.png')] bg-repeat bg-top bg-[length:320px]">
+
+    
+
+    <!-- Card/Painel de Recuperação Centralizado (Sem a borda laranja para seguir o padrão do login) -->
+    <div class="shadow-xl w-full max-w-[400px] p-[30px] bg-white rounded-lg relative z-10">
+      <h1 class="mb-6 text-4xl sm:text-[48px] font-extrabold text-black text-center">Recuperar Senha</h1> 
+      <p class="mb-5 text-sm text-gray-600 text-center leading-relaxed">
+        Digite o e-mail associado à sua conta para receber o link de redefinição.
+      </p>
+
+      <form action="/api/solicitar-recuperacao" method="POST" autocomplete="off" class="w-full" novalidate>
+
+        <!-- Token CSRF -->
+        <input type="hidden" name="csrf_token" value="SEU_TOKEN_CSRF_GERADO_PELO_SERVER">
+
+        <!-- Campo E-mail -->
+        <div class="mb-[15px] relative">
+          <label for="user-email" class="block mb-1.5 text-xs font-medium text-[#333333]">E-mail cadastrado:</label>
+          <input type="email" id="user-email" name="email"
+            class="w-full h-10 px-3 border border-[#D8D8D8] rounded-md bg-white text-black text-sm outline-none transition duration-200 placeholder-[#999999] focus:border-[#0600A9] focus:ring-2 focus:ring-[#0600A9]/10"
+            placeholder="Digite seu e-mail" required maxlength="254" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        </div>
+
+        <!-- Botão de Envio (Vermelho) com o mesmo efeito suave de escala e sombra dos outros botões -->
+        <div class="mt-[25px]">
+          <button type="submit" id="confirmarRecuperacao"
+            class="shadow-lg shadow-red-500/50 w-full h-[42px] border-2 border-[#E00808] rounded-md bg-[#E00808] text-white text-sm font-bold cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-[1.03] duration-700">
+            Enviar Link de Redefinição
+          </button>
+        </div>
+
+        <!-- Link de Voltar ao Login -->
+        <div class="text-center mt-5">
+          <a href="login.html" class="text-xs text-[#0600A9] font-medium hover:underline" rel="noopener">← Voltar para a
+            tela de Login</a>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Rodapé (Faixa Azul Escura Inferior) -->
+  <footer class="w-full min-h-[80px] flex items-center justify-center bg-[#0600A9] text-white shrink-0 px-6">
+    <div class="text-center">
+      <p class="text-sm">&copy; 2026 Central Pet - Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="../js/esqueceuSenha.js" defer></script>
+
+</body>
+
+</html>

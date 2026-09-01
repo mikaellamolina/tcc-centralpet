@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Central Pet - Plataforma de proteção animal, adoção, denúncias e doações.">
+
+  <title>Central Pet</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pet: {
+              orange: "#FFA56D",
+              red: "#E00808",
+              blue: "#0600A9",
+              cream: "#FFEFE5",
+              beige: "#E4B99E",
+              yellow: "#EEEE82"
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- CSS próprio -->
+  <link rel="stylesheet" href="./css/CentralPet.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside id="sidebar" class="sidebar" aria-label="Navegação principal">
+
+      <!-- LOGO -->
+      <div class="sidebar-header">
+
+        <button type="button" id="logo-button" class="logo-button" aria-label="Ir para a página inicial">
+
+          <img src="./img/logo-centralpet.png" alt="Central Pet" class="logo-image">
+
+          <div class="logo-text">
+            <strong>Central Pet</strong>
+            <span>Proteção e cuidado animal</span>
+          </div>
+
+        </button>
+
+        <button id="btn-fechar-menu" type="button" class="mobile-close" aria-label="Fechar menu">
+          ×
+        </button>
+
+      </div>
+
+
+      <!-- BOTÃO PRINCIPAL -->
+      <div id="sidebar-action-container" class="sidebar-action">
+      </div>
+
+
+      <!-- NAVEGAÇÃO -->
+      <nav id="sidebar-nav" class="sidebar-nav">
+      </nav>
+
+
+      <!-- PERFIL -->
+      <div class="sidebar-footer">
+
+        <button type="button" data-route="perfil" class="profile-button">
+
+          <div id="sidebar-avatar" class="profile-avatar">
+            M
+          </div>
+
+          <div class="profile-info">
+
+            <strong id="sidebar-user-name">
+              Maria Silva
+            </strong>
+
+            <span id="sidebar-user-role">
+              Usuária
+            </span>
+
+          </div>
+
+          <span class="profile-arrow">
+            ›
+          </span>
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- OVERLAY MOBILE -->
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
+
+    <!-- =====================================================
+         ÁREA PRINCIPAL
+         ===================================================== -->
+
+    <div class="main-area">
+
+      <!-- HEADER -->
+      <header class="topbar">
+
+        <div class="topbar-left">
+
+          <button id="btn-menu-mobile" type="button" class="mobile-menu-button" aria-label="Abrir menu">
+            ☰
+          </button>
+
+          <div>
+            <span id="breadcrumb" class="breadcrumb">
+              Central Pet
+            </span>
+
+            <h1 id="page-title">
+              Adotar
+            </h1>
+
+            <p id="page-subtitle">
+              Encontre um animal esperando por um novo lar.
+            </p>
+          </div>
+
+        </div>
+
+
+        <button type="button" data-route="perfil" class="header-profile" aria-label="Abrir perfil">
+
+          <span id="header-avatar">
+            M
+          </span>
+
+        </button>
+
+      </header>
+
+
+      <!-- CONTEÚDO -->
+      <main id="conteudo" class="main-content">
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+     MODAL GLOBAL
+     ===================================================== -->
+
+  <div id="modal-container" class="modal-container hidden" aria-hidden="true"></div>
+
+
+  <!-- JS -->
+  <script src="./js/CentralPet.js"></script>
+
+</body>
+
+</html>

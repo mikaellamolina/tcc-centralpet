@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Pet - Login</title>
+
+  <!-- Script Oficial de Execução do Tailwind CSS v3 via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Links de fontes externas do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@700;800&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Configurações das famílias de fontes injetadas no motor do Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            serif: ['"Abhaya Libre"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans text-black bg-[#FFEFE5]">
+
+  <!-- Cabeçalho (Barra Laranja Superior) -->
+  <header class="w-full h-[70px] bg-[#FFA56D] flex items-center px-5 sm:px-[30px] shrink-0">
+    <div class="flex items-center">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <!-- Dimensões explícitas para blindar a logo contra atrasos de renderização do script -->
+        <img src="../img/logo-centralpet.png" alt="Logo Central Pet" width="40" height="40"
+          class="w-10 h-10 object-contain max-w-[40px] max-h-[40px]">
+        <span class="font-serif text-3xl sm:text-[32px] font-extrabold text-black">
+          Central <span class="text-[#E00808]">Pet</span>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Área Principal (Fundo de Patinhas) -->
+  <main
+    class="flex-1 w-full flex flex-col items-center justify-center px-5 py-10 bg-[#FFEFE5] bg-[url('../img/fundo-patinhas.png')] bg-repeat bg-top bg-[length:320px]">
+
+    <!-- Card/Painel de Login Centralizado -->
+    <div class="shadow-xl w-full max-w-[400px] p-[30px] bg-white border rounded-lg relative z-10">
+      <h1 class="mb-6 text-4xl sm:text-[48px] font-extrabold text-black text-center">Login</h1>
+
+      <form action="/login" method="POST" class="w-full" novalidate>
+
+        <!-- Campo E-mail -->
+        <div class="mb-[15px] relative">
+          <label for="user-email" class="block mb-1.5 text-xs font-medium text-[#333333]">E-mail:</label>
+          <input type="email" id="user-email" name="email"
+            class="w-full h-10 px-3 border border-[#D8D8D8] rounded-md bg-white text-black text-sm outline-none transition duration-200 placeholder-[#999999] focus:border-[#0600A9] focus:ring-2 focus:ring-[#0600A9]/10"
+            placeholder="Insira seu e-mail" required>
+        </div>
+
+        <!-- Campo Senha -->
+        <div class="mb-[15px] relative">
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="senha" class="block text-xs font-medium text-[#333333]">Senha:</label>
+            <!-- Link para recuperar senha alinhado à direita -->
+            <a href="esqueceuSenha.html" class="text-xs text-[#0600A9] hover:underline">Esqueceu a senha?</a>
+          </div>
+          <input type="password" id="senha" name="senha"
+            class="w-full h-10 px-3 border border-[#D8D8D8] rounded-md bg-white text-black text-sm outline-none transition duration-200 placeholder-[#999999] focus:border-[#0600A9] focus:ring-2 focus:ring-[#0600A9]/10"
+            placeholder="Insira sua senha" required>
+        </div>
+
+        <!-- Botão de Confirmação com os efeitos de animação que você inseriu -->
+        <div class="mt-[25px] mb-4">
+          <button type="submit" id="confirmarLogin"
+            class="shadow-lg shadow-red-500/50 w-full h-[42px] border-2 border-[#E00808] rounded-md bg-[#E00808] text-white text-sm font-bold cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-700">
+            Entrar
+          </button>
+        </div>
+
+        <!-- Link alternativo para quem não tem conta -->
+        <div class="text-center mt-4">
+          <p class="text-xs text-gray-600">Não tem uma conta? <a href="cadastro.html"
+              class="text-[#0600A9] font-medium hover:underline">Cadastre-se</a></p>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="w-full min-h-[80px] flex items-center justify-center bg-[#0600A9] text-white shrink-0">
+    <p class="text-sm">&copy; 2026 Central Pet. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+
+</html>
