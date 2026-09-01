@@ -1,128 +1,462 @@
-<<<<<<< HEAD
-document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('.topbar');
-    const navLinks = document.querySelectorAll('.nav-links .nav-item');
-    const sections = document.querySelectorAll('.main-sections section');
+/* =========================================================
+   CENTRAL PET - PÁGINA INICIAL
+========================================================= */
 
-    // --- 1. EFEITO DE SOMBRA/ELEVAÇÃO NO CABEÇALHO AO ROLAR ---
-    const handleHeaderScroll = () => {
-        if (window.scrollY > 30) {
-            header.classList.add('header-scrolled');
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        inicializarLucide();
+
+        configurarMenuMobile();
+
+        configurarScrollHeader();
+
+        configurarScrollSpy();
+
+        configurarLinksSuaves();
+
+    }
+);
+
+
+/* =========================================================
+   LUCIDE
+========================================================= */
+
+function inicializarLucide() {
+
+    if (
+        window.lucide &&
+        typeof window.lucide.createIcons === 'function'
+    ) {
+
+        window.lucide.createIcons();
+
+    }
+
+}
+
+
+/* =========================================================
+   HEADER AO ROLAR
+========================================================= */
+
+function configurarScrollHeader() {
+
+    const header =
+        document.getElementById(
+            'header'
+        );
+
+
+    if (!header) {
+        return;
+    }
+
+
+    function atualizarHeader() {
+
+        if (
+            window.scrollY > 20
+        ) {
+
+            header.classList.add(
+                'border-gray-100',
+                'shadow-sm'
+            );
+
+            header.classList.remove(
+                'border-transparent'
+            );
+
         } else {
-            header.classList.remove('header-scrolled');
+
+            header.classList.remove(
+                'border-gray-100',
+                'shadow-sm'
+            );
+
+            header.classList.add(
+                'border-transparent'
+            );
+
         }
-    };
 
-    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+    }
 
-    // --- 2. ROLAGEM SUAVE COM DESCONTO DO CABEÇALHO FIXO ---
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href');
 
-            if (targetId.startsWith('#')) {
-                e.preventDefault();
-                const targetSection = document.querySelector(targetId);
-
-                if (targetSection) {
-                    const headerHeight = header.offsetHeight;
-                    const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-
-    // --- 3. DESTASQUE AUTOMÁTICO DO MENU (SCROLLSPY COM INTERSECTION OBSERVER) ---
-    const observerOptions = {
-        root: null,
-        rootMargin: '-25% 0px -65% 0px',
-        threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const idAtual = entry.target.getAttribute('id');
-
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === `#${idAtual}`) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => observer.observe(section));
-=======
-document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('.topbar');
-    const navLinks = document.querySelectorAll('.nav-links .nav-item');
-    const sections = document.querySelectorAll('.main-sections section');
-
-    // --- 1. EFEITO DE SOMBRA/ELEVAÇÃO NO CABEÇALHO AO ROLAR ---
-    const handleHeaderScroll = () => {
-        if (window.scrollY > 30) {
-            header.classList.add('header-scrolled');
-        } else {
-            header.classList.remove('header-scrolled');
+    window.addEventListener(
+        'scroll',
+        atualizarHeader,
+        {
+            passive: true
         }
-    };
+    );
 
-    window.addEventListener('scroll', handleHeaderScroll, { passive: true });
 
-    // --- 2. ROLAGEM SUAVE COM DESCONTO DO CABEÇALHO FIXO ---
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const targetId = link.getAttribute('href');
+    atualizarHeader();
 
-            if (targetId.startsWith('#')) {
-                e.preventDefault();
-                const targetSection = document.querySelector(targetId);
+}
 
-                if (targetSection) {
-                    const headerHeight = header.offsetHeight;
-                    const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
 
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+/* =========================================================
+   MENU MOBILE
+========================================================= */
+
+function configurarMenuMobile() {
+
+    const botao =
+        document.getElementById(
+            'btn-menu'
+        );
+
+
+    const menu =
+        document.getElementById(
+            'mobile-menu'
+        );
+
+
+    if (
+        !botao ||
+        !menu
+    ) {
+
+        return;
+
+    }
+
+
+    botao.addEventListener(
+        'click',
+        () => {
+
+            const estaAberto =
+                !menu.classList.contains(
+                    'hidden'
+                );
+
+
+            if (estaAberto) {
+
+                fecharMenuMobile();
+
+            } else {
+
+                abrirMenuMobile();
+
             }
-        });
-    });
 
-    // --- 3. DESTASQUE AUTOMÁTICO DO MENU (SCROLLSPY COM INTERSECTION OBSERVER) ---
-    const observerOptions = {
-        root: null,
-        rootMargin: '-25% 0px -65% 0px',
-        threshold: 0
-    };
+        }
+    );
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const idAtual = entry.target.getAttribute('id');
 
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === `#${idAtual}`) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
+    document
+        .querySelectorAll(
+            '.mobile-link'
+        )
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    'click',
+                    fecharMenuMobile
+                );
+
+            }
+        );
+
+}
+
+
+function abrirMenuMobile() {
+
+    const menu =
+        document.getElementById(
+            'mobile-menu'
+        );
+
+
+    const botao =
+        document.getElementById(
+            'btn-menu'
+        );
+
+
+    if (!menu) {
+        return;
+    }
+
+
+    menu.classList.remove(
+        'hidden'
+    );
+
+
+    menu.classList.add(
+        'animate-[fadeInDown_.2s_ease-out]'
+    );
+
+
+    if (botao) {
+
+        botao.innerHTML = `
+
+            <i
+                data-lucide="x"
+                class="h-5 w-5"
+            ></i>
+
+        `;
+
+        inicializarLucide();
+
+    }
+
+}
+
+
+function fecharMenuMobile() {
+
+    const menu =
+        document.getElementById(
+            'mobile-menu'
+        );
+
+
+    const botao =
+        document.getElementById(
+            'btn-menu'
+        );
+
+
+    if (!menu) {
+        return;
+    }
+
+
+    menu.classList.add(
+        'hidden'
+    );
+
+
+    menu.classList.remove(
+        'animate-[fadeInDown_.2s_ease-out]'
+    );
+
+
+    if (botao) {
+
+        botao.innerHTML = `
+
+            <i
+                data-lucide="menu"
+                class="h-5 w-5"
+            ></i>
+
+        `;
+
+        inicializarLucide();
+
+    }
+
+}
+
+
+/* =========================================================
+   SCROLL SUAVE
+========================================================= */
+
+function configurarLinksSuaves() {
+
+    const links =
+        document.querySelectorAll(
+            'a[href^="#"]'
+        );
+
+
+    links.forEach(
+        link => {
+
+            link.addEventListener(
+                'click',
+                event => {
+
+                    const destino =
+                        link.getAttribute(
+                            'href'
+                        );
+
+
+                    if (
+                        !destino ||
+                        destino === '#'
+                    ) {
+
+                        return;
+
                     }
-                });
-            }
-        });
-    }, observerOptions);
 
-    sections.forEach(section => observer.observe(section));
->>>>>>> 8eec5d50942f85572ec9306c8c0098acdd819b85
-});
+
+                    const secao =
+                        document.querySelector(
+                            destino
+                        );
+
+
+                    if (!secao) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    secao.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SCROLLSPY
+========================================================= */
+
+function configurarScrollSpy() {
+
+    const secoes =
+        document.querySelectorAll(
+            'main > section[id], main#inicio > section[id]'
+        );
+
+
+    const links =
+        document.querySelectorAll(
+            '.nav-link'
+        );
+
+
+    if (
+        !secoes.length ||
+        !links.length
+    ) {
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if (
+                            !entry.isIntersecting
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const id =
+                            entry.target.id;
+
+
+                        links.forEach(
+                            link => {
+
+                                const ativo =
+                                    link.dataset.nav ===
+                                    id;
+
+
+                                link.classList.toggle(
+                                    'bg-[#FFEFE5]',
+                                    ativo
+                                );
+
+
+                                link.classList.toggle(
+                                    'text-pet-red',
+                                    ativo
+                                );
+
+
+                                link.classList.toggle(
+                                    'text-gray-600',
+                                    !ativo
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+            },
+
+            {
+
+                root: null,
+
+                rootMargin:
+                    '-20% 0px -65% 0px',
+
+                threshold: 0
+
+            }
+
+        );
+
+
+    secoes.forEach(
+        secao => {
+
+            observer.observe(
+                secao
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FECHAR MENU AO REDIMENSIONAR
+========================================================= */
+
+window.addEventListener(
+    'resize',
+    () => {
+
+        if (
+            window.innerWidth >=
+            1024
+        ) {
+
+            fecharMenuMobile();
+
+        }
+
+    }
+);
