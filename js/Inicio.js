@@ -1,462 +1,261 @@
-/* =========================================================
-   CENTRAL PET - PÁGINA INICIAL
-========================================================= */
-
-
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
-
-document.addEventListener(
-    'DOMContentLoaded',
-    () => {
-
-        inicializarLucide();
-
-        configurarMenuMobile();
-
-        configurarScrollHeader();
-
-        configurarScrollSpy();
-
-        configurarLinksSuaves();
-
-    }
-);
-
-
-/* =========================================================
-   LUCIDE
-========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarLucide();
+    configurarHeader();
+    configurarMenuMobile();
+    configurarRolagemSuave();
+    configurarScrollSpy();
+});
 
 function inicializarLucide() {
-
     if (
         window.lucide &&
         typeof window.lucide.createIcons === 'function'
     ) {
-
         window.lucide.createIcons();
-
     }
-
 }
 
+function configurarHeader() {
+    const header = document.getElementById('header');
 
-/* =========================================================
-   HEADER AO ROLAR
-========================================================= */
-
-function configurarScrollHeader() {
-
-    const header =
-        document.getElementById(
-            'header'
-        );
-
-
-    if (!header) {
-        return;
-    }
-
+    if (!header) return;
 
     function atualizarHeader() {
-
-        if (
-            window.scrollY > 20
-        ) {
-
+        if (window.scrollY > 20) {
             header.classList.add(
-                'border-gray-100',
-                'shadow-sm'
+                'shadow-md',
+                'border-orange-200'
             );
 
             header.classList.remove(
                 'border-transparent'
             );
-
         } else {
-
             header.classList.remove(
-                'border-gray-100',
-                'shadow-sm'
+                'shadow-md',
+                'border-orange-200'
             );
 
             header.classList.add(
                 'border-transparent'
             );
-
         }
-
     }
-
 
     window.addEventListener(
         'scroll',
         atualizarHeader,
-        {
-            passive: true
-        }
+        { passive: true }
     );
-
 
     atualizarHeader();
-
 }
-
-
-/* =========================================================
-   MENU MOBILE
-========================================================= */
 
 function configurarMenuMobile() {
+    const botao = document.getElementById('btn-menu');
+    const menu = document.getElementById('mobile-menu');
 
-    const botao =
-        document.getElementById(
-            'btn-menu'
-        );
+    if (!botao || !menu) return;
 
+    botao.addEventListener('click', () => {
+        const aberto =
+            !menu.classList.contains('hidden');
 
-    const menu =
-        document.getElementById(
-            'mobile-menu'
-        );
-
-
-    if (
-        !botao ||
-        !menu
-    ) {
-
-        return;
-
-    }
-
-
-    botao.addEventListener(
-        'click',
-        () => {
-
-            const estaAberto =
-                !menu.classList.contains(
-                    'hidden'
-                );
-
-
-            if (estaAberto) {
-
-                fecharMenuMobile();
-
-            } else {
-
-                abrirMenuMobile();
-
-            }
-
+        if (aberto) {
+            fecharMenuMobile();
+        } else {
+            abrirMenuMobile();
         }
-    );
-
+    });
 
     document
-        .querySelectorAll(
-            '.mobile-link'
-        )
-        .forEach(
-            link => {
-
-                link.addEventListener(
-                    'click',
-                    fecharMenuMobile
-                );
-
-            }
-        );
-
+        .querySelectorAll('.mobile-link')
+        .forEach(link => {
+            link.addEventListener('click', () => {
+                fecharMenuMobile();
+            });
+        });
 }
 
-
 function abrirMenuMobile() {
-
     const menu =
-        document.getElementById(
-            'mobile-menu'
-        );
-
+        document.getElementById('mobile-menu');
 
     const botao =
-        document.getElementById(
-            'btn-menu'
-        );
+        document.getElementById('btn-menu');
 
+    if (!menu) return;
 
-    if (!menu) {
-        return;
-    }
-
-
-    menu.classList.remove(
-        'hidden'
-    );
-
-
-    menu.classList.add(
-        'animate-[fadeInDown_.2s_ease-out]'
-    );
-
+    menu.classList.remove('hidden');
+    menu.classList.add('animate-fadeInDown');
 
     if (botao) {
-
         botao.innerHTML = `
-
             <i
                 data-lucide="x"
                 class="h-5 w-5"
             ></i>
-
         `;
 
+        botao.setAttribute(
+            'aria-label',
+            'Fechar menu'
+        );
+
         inicializarLucide();
-
     }
-
 }
 
-
 function fecharMenuMobile() {
-
     const menu =
-        document.getElementById(
-            'mobile-menu'
-        );
-
+        document.getElementById('mobile-menu');
 
     const botao =
-        document.getElementById(
-            'btn-menu'
-        );
+        document.getElementById('btn-menu');
 
+    if (!menu) return;
 
-    if (!menu) {
-        return;
-    }
-
-
-    menu.classList.add(
-        'hidden'
-    );
-
-
-    menu.classList.remove(
-        'animate-[fadeInDown_.2s_ease-out]'
-    );
-
+    menu.classList.add('hidden');
+    menu.classList.remove('animate-fadeInDown');
 
     if (botao) {
-
         botao.innerHTML = `
-
             <i
                 data-lucide="menu"
                 class="h-5 w-5"
             ></i>
-
         `;
 
+        botao.setAttribute(
+            'aria-label',
+            'Abrir menu'
+        );
+
         inicializarLucide();
-
     }
-
 }
 
-
-/* =========================================================
-   SCROLL SUAVE
-========================================================= */
-
-function configurarLinksSuaves() {
-
+function configurarRolagemSuave() {
     const links =
         document.querySelectorAll(
             'a[href^="#"]'
         );
 
+    links.forEach(link => {
+        link.addEventListener('click', event => {
 
-    links.forEach(
-        link => {
+            const destino =
+                link.getAttribute('href');
 
-            link.addEventListener(
-                'click',
-                event => {
+            if (
+                !destino ||
+                destino === '#'
+            ) {
+                return;
+            }
 
-                    const destino =
-                        link.getAttribute(
-                            'href'
-                        );
+            const elemento =
+                document.querySelector(destino);
 
+            if (!elemento) {
+                return;
+            }
 
-                    if (
-                        !destino ||
-                        destino === '#'
-                    ) {
+            event.preventDefault();
 
-                        return;
+            const header =
+                document.getElementById('header');
 
-                    }
+            const alturaHeader =
+                header
+                    ? header.offsetHeight
+                    : 0;
 
+            const posicao =
+                elemento.getBoundingClientRect().top +
+                window.scrollY -
+                alturaHeader;
 
-                    const secao =
-                        document.querySelector(
-                            destino
-                        );
+            window.scrollTo({
+                top: posicao,
+                behavior: 'smooth'
+            });
 
-
-                    if (!secao) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    secao.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-
-                }
-            );
-
-        }
-    );
-
+            fecharMenuMobile();
+        });
+    });
 }
 
-
-/* =========================================================
-   SCROLLSPY
-========================================================= */
-
 function configurarScrollSpy() {
-
     const secoes =
         document.querySelectorAll(
-            'main > section[id], main#inicio > section[id]'
+            'main > section[id]'
         );
-
 
     const links =
         document.querySelectorAll(
             '.nav-link'
         );
 
-
     if (
         !secoes.length ||
         !links.length
     ) {
-
         return;
-
     }
-
 
     const observer =
         new IntersectionObserver(
-
             entries => {
+                entries.forEach(entry => {
 
-                entries.forEach(
-                    entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
-                        if (
-                            !entry.isIntersecting
-                        ) {
+                    const id =
+                        entry.target.id;
 
-                            return;
+                    links.forEach(link => {
 
-                        }
+                        const ativo =
+                            link.dataset.nav === id;
 
-
-                        const id =
-                            entry.target.id;
-
-
-                        links.forEach(
-                            link => {
-
-                                const ativo =
-                                    link.dataset.nav ===
-                                    id;
-
-
-                                link.classList.toggle(
-                                    'bg-[#FFEFE5]',
-                                    ativo
-                                );
-
-
-                                link.classList.toggle(
-                                    'text-pet-red',
-                                    ativo
-                                );
-
-
-                                link.classList.toggle(
-                                    'text-gray-600',
-                                    !ativo
-                                );
-
-                            }
+                        link.classList.toggle(
+                            'bg-[#FFEFE5]',
+                            ativo
                         );
 
-                    }
-                );
+                        link.classList.toggle(
+                            'text-pet-red',
+                            ativo
+                        );
 
+                        link.classList.toggle(
+                            'text-gray-700',
+                            !ativo
+                        );
+
+                    });
+
+                });
             },
-
             {
-
                 root: null,
-
-                rootMargin:
-                    '-20% 0px -65% 0px',
-
+                rootMargin: '-20% 0px -65% 0px',
                 threshold: 0
-
             }
-
         );
 
-
-    secoes.forEach(
-        secao => {
-
-            observer.observe(
-                secao
-            );
-
-        }
-    );
-
+    secoes.forEach(secao => {
+        observer.observe(secao);
+    });
 }
 
+window.addEventListener('resize', () => {
 
-/* =========================================================
-   FECHAR MENU AO REDIMENSIONAR
-========================================================= */
-
-window.addEventListener(
-    'resize',
-    () => {
-
-        if (
-            window.innerWidth >=
-            1024
-        ) {
-
-            fecharMenuMobile();
-
-        }
-
+    if (window.innerWidth >= 1024) {
+        fecharMenuMobile();
     }
-);
+
+});
