@@ -823,7 +823,9 @@ const paginasValidas = [
 
     'triagem',
 
-    'gerenciar-doacoes'
+    'gerenciar-doacoes',
+
+    'maus-tratos'
 
 ];
 
@@ -921,21 +923,37 @@ function podeAcessarPagina(
     pagina
 ) {
 
-    return (
-
-        ![
+    if (
+        [
             'triagem',
             'gerenciar-doacoes'
         ].includes(
             pagina
         )
+    ) {
 
-        ||
+        return (
+            state.userProfile.tipo ===
+            'orgao'
+        );
 
-        state.userProfile.tipo ===
-        'orgao'
+    }
 
-    );
+
+    if (
+        pagina ===
+        'maus-tratos'
+    ) {
+
+        return (
+            state.userProfile.tipo ===
+            'usuario'
+        );
+
+    }
+
+
+    return true;
 
 }
 
@@ -1032,17 +1050,24 @@ function renderizarSidebar() {
 
 
             ${criarBotaoMenu(
-                'adotar',
-                'heart-handshake',
-                'Adotar'
-            )}
-
-
-            ${criarBotaoMenu(
                 'denunciar',
                 'triangle-alert',
                 'Denunciar'
             )}
+
+
+            ${
+                state.userProfile.tipo ===
+                'usuario'
+
+                    ? criarBotaoMenu(
+                        'maus-tratos',
+                        'shield-alert',
+                        'O que são maus-tratos?'
+                    )
+
+                    : ''
+                }
 
 
             ${criarBotaoMenu(
@@ -1436,7 +1461,17 @@ function renderizarPagina() {
 
             break;
 
+        case 'maus-tratos':
 
+            atualizarCabecalho(
+                'O que são maus-tratos?',
+                'Informações para ajudar você a reconhecer, compreender e denunciar situações de maus-tratos contra animais.'
+            );
+
+            main.innerHTML =
+            renderInformacoesMausTratos();
+
+            break;
         case 'doar':
 
             atualizarCabecalho(
@@ -9175,5 +9210,1050 @@ function escaparHTML(
             "'",
             '&#039;'
         );
+
+}
+function renderInformacoesMausTratos() {
+
+    return `
+
+        <section
+            class="
+                mx-auto
+                w-full
+                max-w-5xl
+                space-y-6
+                animate-[fadeIn_.35s_ease-out]
+            "
+        >
+
+            <!-- INTRODUÇÃO -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-[#E4B99E]
+                    bg-white
+                    p-6
+                    shadow-sm
+                    md:p-8
+                "
+            >
+
+                <div
+                    class="
+                        flex
+                        flex-col
+                        gap-5
+                        sm:flex-row
+                        sm:items-start
+                    "
+                >
+
+                    <div
+                        class="
+                            flex
+                            h-14
+                            w-14
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            text-[#E00808]
+                        "
+                    >
+
+                        <i
+                            data-lucide="shield-alert"
+                            class="h-7 w-7"
+                        ></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2
+                            class="
+                                text-2xl
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            O que são maus-tratos?
+                        </h2>
+
+
+                        <p
+                            class="
+                                mt-3
+                                text-sm
+                                leading-7
+                                text-gray-600
+                            "
+                        >
+                            Maus-tratos são ações ou situações que causam
+                            sofrimento, dor, ferimentos ou prejuízos ao
+                            bem-estar de um animal.
+                        </p>
+
+
+                        <p
+                            class="
+                                mt-3
+                                text-sm
+                                leading-7
+                                text-gray-600
+                            "
+                        >
+                            Eles podem acontecer por violência física,
+                            abandono, negligência ou pela falta de cuidados
+                            necessários para manter a saúde e o bem-estar
+                            do animal.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMO IDENTIFICAR -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-[#E4B99E]
+                    bg-white
+                    p-6
+                    shadow-sm
+                    md:p-8
+                "
+            >
+
+                <div
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                    "
+                >
+
+                    <div
+                        class="
+                            flex
+                            h-10
+                            w-10
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-[#FFEFE5]
+                            text-[#E00808]
+                        "
+                    >
+
+                        <i
+                            data-lucide="triangle-alert"
+                            class="h-5 w-5"
+                        ></i>
+
+                    </div>
+
+
+                    <h2
+                        class="
+                            text-xl
+                            font-black
+                            text-gray-900
+                        "
+                    >
+                        Como identificar maus-tratos?
+                    </h2>
+
+                </div>
+
+
+                <p
+                    class="
+                        mt-3
+                        text-sm
+                        leading-7
+                        text-gray-600
+                    "
+                >
+                    Algumas situações podem indicar que um animal está
+                    sofrendo maus-tratos. Entre os exemplos estão:
+                </p>
+
+
+                <div
+                    class="
+                        mt-6
+                        grid
+                        gap-4
+                        sm:grid-cols-2
+                    "
+                >
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            p-5
+                        "
+                    >
+
+                        <i
+                            data-lucide="swords"
+                            class="h-6 w-6 text-[#E00808]"
+                        ></i>
+
+
+                        <h3
+                            class="
+                                mt-3
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Agressões físicas
+                        </h3>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-6
+                                text-gray-600
+                            "
+                        >
+                            Bater, chutar, ferir, mutilar ou utilizar
+                            qualquer forma de violência física contra
+                            o animal.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            p-5
+                        "
+                    >
+
+                        <i
+                            data-lucide="house-off"
+                            class="h-6 w-6 text-[#E00808]"
+                        ></i>
+
+
+                        <h3
+                            class="
+                                mt-3
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Abandono
+                        </h3>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-6
+                                text-gray-600
+                            "
+                        >
+                            Abandonar um animal ou deixá-lo sem os
+                            cuidados necessários para sua sobrevivência
+                            e bem-estar.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            p-5
+                        "
+                    >
+
+                        <i
+                            data-lucide="utensils"
+                            class="h-6 w-6 text-[#E00808]"
+                        ></i>
+
+
+                        <h3
+                            class="
+                                mt-3
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Falta de alimento e água
+                        </h3>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-6
+                                text-gray-600
+                            "
+                        >
+                            Deixar o animal sem alimentação adequada
+                            ou sem acesso suficiente à água.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            p-5
+                        "
+                    >
+
+                        <i
+                            data-lucide="home"
+                            class="h-6 w-6 text-[#E00808]"
+                        ></i>
+
+
+                        <h3
+                            class="
+                                mt-3
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Ambiente inadequado
+                        </h3>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-6
+                                text-gray-600
+                            "
+                        >
+                            Manter o animal em um ambiente que ofereça
+                            riscos, falta de higiene, espaço inadequado
+                            ou condições prejudiciais.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            p-5
+                        "
+                    >
+
+                        <i
+                            data-lucide="stethoscope"
+                            class="h-6 w-6 text-[#E00808]"
+                        ></i>
+
+
+                        <h3
+                            class="
+                                mt-3
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Falta de cuidados
+                        </h3>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-6
+                                text-gray-600
+                            "
+                        >
+                            Deixar de fornecer cuidados necessários
+                            ao animal, inclusive atendimento veterinário
+                            quando ele for necessário.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#FFEFE5]
+                            p-5
+                        "
+                    >
+
+                        <i
+                            data-lucide="link-2-off"
+                            class="h-6 w-6 text-[#E00808]"
+                        ></i>
+
+
+                        <h3
+                            class="
+                                mt-3
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Confinamento inadequado
+                        </h3>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-6
+                                text-gray-600
+                            "
+                        >
+                            Manter o animal preso ou confinado em
+                            condições que causem sofrimento ou coloquem
+                            sua segurança em risco.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ATENÇÃO -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-[#EEEE82]
+                    bg-[#EEEE82]/30
+                    p-6
+                "
+            >
+
+                <div
+                    class="
+                        flex
+                        items-start
+                        gap-4
+                    "
+                >
+
+                    <i
+                        data-lucide="info"
+                        class="
+                            mt-1
+                            h-6
+                            w-6
+                            shrink-0
+                            text-[#0600A9]
+                        "
+                    ></i>
+
+
+                    <div>
+
+                        <h2
+                            class="
+                                font-black
+                                text-gray-900
+                            "
+                        >
+                            Observe a situação
+                        </h2>
+
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-7
+                                text-gray-700
+                            "
+                        >
+                            É importante observar o contexto da situação,
+                            as condições do animal, o ambiente e a existência
+                            de sinais de sofrimento ou risco. Sempre que
+                            possível, reúna informações objetivas sobre o
+                            que está acontecendo.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- O QUE FAZER -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-[#E4B99E]
+                    bg-white
+                    p-6
+                    shadow-sm
+                    md:p-8
+                "
+            >
+
+                <div
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                    "
+                >
+
+                    <div
+                        class="
+                            flex
+                            h-10
+                            w-10
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-[#0600A9]/10
+                            text-[#0600A9]
+                        "
+                    >
+
+                        <i
+                            data-lucide="clipboard-list"
+                            class="h-5 w-5"
+                        ></i>
+
+                    </div>
+
+
+                    <h2
+                        class="
+                            text-xl
+                            font-black
+                            text-gray-900
+                        "
+                    >
+                        O que fazer?
+                    </h2>
+
+                </div>
+
+
+                <div
+                    class="
+                        mt-6
+                        space-y-5
+                    "
+                >
+
+                    <div
+                        class="
+                            flex
+                            gap-4
+                        "
+                    >
+
+                        <div
+                            class="
+                                flex
+                                h-8
+                                w-8
+                                shrink-0
+                                items-center
+                                justify-center
+                                rounded-full
+                                bg-[#0600A9]
+                                text-sm
+                                font-black
+                                text-white
+                            "
+                        >
+                            1
+                        </div>
+
+
+                        <div>
+
+                            <h3
+                                class="
+                                    font-black
+                                    text-gray-900
+                                "
+                            >
+                                Observe
+                            </h3>
+
+
+                            <p
+                                class="
+                                    mt-1
+                                    text-sm
+                                    leading-6
+                                    text-gray-600
+                                "
+                            >
+                                Observe a situação e, se possível e
+                                seguro, registre informações importantes
+                                sobre o caso.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            flex
+                            gap-4
+                        "
+                    >
+
+                        <div
+                            class="
+                                flex
+                                h-8
+                                w-8
+                                shrink-0
+                                items-center
+                                justify-center
+                                rounded-full
+                                bg-[#0600A9]
+                                text-sm
+                                font-black
+                                text-white
+                            "
+                        >
+                            2
+                        </div>
+
+
+                        <div>
+
+                            <h3
+                                class="
+                                    font-black
+                                    text-gray-900
+                                "
+                            >
+                                Reúna informações
+                            </h3>
+
+
+                            <p
+                                class="
+                                    mt-1
+                                    text-sm
+                                    leading-6
+                                    text-gray-600
+                                "
+                            >
+                                Informações como endereço, descrição
+                                dos fatos, fotos, vídeos e testemunhas
+                                podem ajudar na apuração da denúncia.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            flex
+                            gap-4
+                        "
+                    >
+
+                        <div
+                            class="
+                                flex
+                                h-8
+                                w-8
+                                shrink-0
+                                items-center
+                                justify-center
+                                rounded-full
+                                bg-[#0600A9]
+                                text-sm
+                                font-black
+                                text-white
+                            "
+                        >
+                            3
+                        </div>
+
+
+                        <div>
+
+                            <h3
+                                class="
+                                    font-black
+                                    text-gray-900
+                                "
+                            >
+                                Denuncie
+                            </h3>
+
+
+                            <p
+                                class="
+                                    mt-1
+                                    text-sm
+                                    leading-6
+                                    text-gray-600
+                                "
+                            >
+                                Quando identificar uma situação que
+                                possa caracterizar maus-tratos, procure
+                                os canais responsáveis ou utilize a
+                                área de denúncia da Central Pet.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTÃO PARA DENÚNCIA -->
+
+            <div
+                class="
+                    rounded-3xl
+                    bg-[#0600A9]
+                    p-6
+                    text-white
+                    shadow-sm
+                    md:p-8
+                "
+            >
+
+                <div
+                    class="
+                        flex
+                        flex-col
+                        gap-5
+                        sm:flex-row
+                        sm:items-center
+                        sm:justify-between
+                    "
+                >
+
+                    <div>
+
+                        <h2
+                            class="
+                                text-xl
+                                font-black
+                            "
+                        >
+                            Viu uma possível situação de maus-tratos?
+                        </h2>
+
+
+                        <p
+                            class="
+                                mt-2
+                                max-w-2xl
+                                text-sm
+                                leading-6
+                                text-white/80
+                            "
+                        >
+                            Registre uma denúncia e forneça as
+                            informações que você possui sobre a situação.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        data-route="denunciar"
+
+                        class="
+                            shrink-0
+                            rounded-xl
+                            bg-[#FFA56D]
+                            px-5
+                            py-3
+                            text-sm
+                            font-black
+                            text-black
+                            transition
+                            hover:scale-[1.02]
+                        "
+                    >
+                        Fazer denúncia
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- INFORMAÇÕES LEGAIS -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-[#E4B99E]
+                    bg-white
+                    p-6
+                    shadow-sm
+                "
+            >
+
+                <div
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                    "
+                >
+
+                    <i
+                        data-lucide="scale"
+                        class="
+                            h-6
+                            w-6
+                            text-[#0600A9]
+                        "
+                    ></i>
+
+
+                    <h2
+                        class="
+                            text-xl
+                            font-black
+                        "
+                    >
+                        Maus-tratos e a legislação
+                    </h2>
+
+                </div>
+
+
+                <p
+                    class="
+                        mt-3
+                        text-sm
+                        leading-7
+                        text-gray-600
+                    "
+                >
+                    A legislação brasileira prevê proteção aos animais
+                    contra abuso, maus-tratos, ferimentos e mutilações.
+                    A Lei nº 9.605/1998 trata dessas condutas no artigo 32.
+                </p>
+
+
+                <p
+                    class="
+                        mt-3
+                        text-sm
+                        leading-7
+                        text-gray-600
+                    "
+                >
+                    Para cães e gatos, a Lei nº 14.064/2020 estabeleceu
+                    tratamento penal específico para a prática de abuso,
+                    maus-tratos, ferimento ou mutilação.
+                </p>
+
+            </div>
+
+
+            <!-- FONTES -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-[#E4B99E]
+                    bg-white
+                    p-6
+                    shadow-sm
+                "
+            >
+
+                <h2
+                    class="
+                        text-lg
+                        font-black
+                    "
+                >
+                    Para saber mais
+                </h2>
+
+
+                <div
+                    class="
+                        mt-4
+                        space-y-3
+                    "
+                >
+
+                    <a
+                        href="https://www.planalto.gov.br/ccivil_03/leis/l9605.htm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+
+                        class="
+                            flex
+                            items-center
+                            gap-3
+                            rounded-xl
+                            bg-gray-50
+                            p-4
+                            text-sm
+                            font-bold
+                            text-[#0600A9]
+                            transition
+                            hover:bg-blue-50
+                        "
+                    >
+
+                        <i
+                            data-lucide="book-open"
+                            class="h-5 w-5"
+                        ></i>
+
+                        Lei nº 9.605/1998 — Lei de Crimes Ambientais
+
+                    </a>
+
+
+                    <a
+                        href="https://planalto.gov.br/ccivil_03/_ato2019-2022/2020/lei/l14064.htm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+
+                        class="
+                            flex
+                            items-center
+                            gap-3
+                            rounded-xl
+                            bg-gray-50
+                            p-4
+                            text-sm
+                            font-bold
+                            text-[#0600A9]
+                            transition
+                            hover:bg-blue-50
+                        "
+                    >
+
+                        <i
+                            data-lucide="scale"
+                            class="h-5 w-5"
+                        ></i>
+
+                        Lei nº 14.064/2020
+
+                    </a>
+
+
+                    <a
+                        href="https://www.cfmv.gov.br/veja-como-denunciar-maus-tratos-praticados-contra-animais/comunicacao/noticias/2018/10/02/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+
+                        class="
+                            flex
+                            items-center
+                            gap-3
+                            rounded-xl
+                            bg-gray-50
+                            p-4
+                            text-sm
+                            font-bold
+                            text-[#0600A9]
+                            transition
+                            hover:bg-blue-50
+                        "
+                    >
+
+                        <i
+                            data-lucide="graduation-cap"
+                            class="h-5 w-5"
+                        ></i>
+
+                        Conselho Federal de Medicina Veterinária
+
+                    </a>
+
+
+                    <a
+                        href="https://www.gov.br/ibama/pt-br/canais_atendimento/fale-conosco"
+                        target="_blank"
+                        rel="noopener noreferrer"
+
+                        class="
+                            flex
+                            items-center
+                            gap-3
+                            rounded-xl
+                            bg-gray-50
+                            p-4
+                            text-sm
+                            font-bold
+                            text-[#0600A9]
+                            transition
+                            hover:bg-blue-50
+                        "
+                    >
+
+                        <i
+                            data-lucide="leaf"
+                            class="h-5 w-5"
+                        ></i>
+
+                        Ibama — canais de atendimento
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    `;
 
 }
